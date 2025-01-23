@@ -1,0 +1,67 @@
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #282c34;
+  }
+  
+  .game-container {
+    text-align: center;
+    color: white;
+  }
+  
+  .grid {
+    display: grid;
+    grid-template-rows: repeat(8, 50px);
+    grid-template-columns: 1fr;
+    width: 400px;
+    border: 2px solid white;
+    margin: 20px auto;
+  }
+  
+  .row {
+    width: 100%;
+    height: 100%;
+  }
+  
+  .starting-block {
+    background-color: blue;
+  }
+  
+  .road {
+    background-color: gray;
+  }
+  
+  .c1 {
+    background-color: rgb(235, 170, 170);
+  }
+  
+  .c2,
+  .c3 {
+    background-color: lightgray; 
+  }
+  
+  .river {
+    background-color: lightblue;
+  }
+  
+  .l1,
+  .l2,
+  .l3 {
+    background-color: rgb(102, 102, 148); 
+  }
+  
+  .l4,
+  .l5,
+  .lf2,
+  .lf3 {
+    background-color: rgb(154, 154, 202);
+  }
+  
+  .frog {
+    background-color: rgb(158, 236, 158);
+  }
+  
