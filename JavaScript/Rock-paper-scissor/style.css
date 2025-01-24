@@ -1,0 +1,17 @@
+.game-container {
+    text-align: center;
+    font-family: Arial, sans-serif;
+  }
+  .choices button {
+    margin: 10px;
+    padding: 15px 30px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  .choices button:hover {
+    transform: scale(1.1);
+  }
+  .result, .scoreboard {
+    margin-top: 20px;
+  }

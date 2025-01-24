@@ -1,28 +1,67 @@
-const resultDisplay = document.getElementById('result');
-const buttons = document.querySelectorAll('button');
-
 const choices = ['rock', 'paper', 'scissors'];
+let wins = 0;
+let losses = 0;
+let ties = 0;
 
-function playGame(playerChoice) {
+const winSound = new Audio('./Audio/win.mp3');
+const loseSound = new Audio('./Audio/lose.mp3');
+const tieSound = new Audio('./Audio/tie.mp3');
 
-  const computerChoice = choices[Math.floor(Math.random() * 3)];
+function getRandomChoice() {
+  return choices[Math.floor(Math.random() * choices.length)];
+}
 
-  let result = '';
+function determineWinner(playerChoice, computerChoice) {
   if (playerChoice === computerChoice) {
-    result = "It's a tie!";
+    return 'tie';
   } else if (
     (playerChoice === 'rock' && computerChoice === 'scissors') ||
     (playerChoice === 'scissors' && computerChoice === 'paper') ||
     (playerChoice === 'paper' && computerChoice === 'rock')
   ) {
-    result = 'You win!';
+    return 'win';
   } else {
-    result = 'You lose!';
+    return 'lose';
   }
-
-  resultDisplay.textContent = `You chose ${playerChoice}, Computer chose ${computerChoice}. ${result}`;
 }
 
+function updateScoreboard(result) {
+  if (result === 'win') {
+    wins++;
+    winSound.play();
+  } else if (result === 'lose') {
+    losses++;
+    loseSound.play();
+  } else {
+    ties++;
+    tieSound.play();
+  }
+  document.getElementById('wins').textContent = `Wins: ${wins}`;
+  document.getElementById('losses').textContent = `Losses: ${losses}`;
+  document.getElementById('ties').textContent = `Ties: ${ties}`;
+}
+
+function playGame(playerChoice) {
+  const computerChoice = getRandomChoice();
+
+  document.getElementById('player-choice').textContent = `Player Choice: ${playerChoice}`;
+  document.getElementById('computer-choice').textContent = `Computer Choice: ${computerChoice}`;
+
+  const result = determineWinner(playerChoice, computerChoice);
+  let resultMessage;
+  if (result === 'win') {
+    resultMessage = 'You Win!';
+  } else if (result === 'lose') {
+    resultMessage = 'You Lose!';
+  } else {
+    resultMessage = "It's a Tie!";
+  }
+  document.getElementById('game-result').textContent = `Result: ${resultMessage}`;
+
+  updateScoreboard(result);
+}
+
+const buttons = document.querySelectorAll('.choice');
 buttons.forEach(button => {
   button.addEventListener('click', () => {
     playGame(button.id);
