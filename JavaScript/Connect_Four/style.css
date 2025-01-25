@@ -1,44 +1,61 @@
 body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 0;
-    padding: 20px;
-    background-color: #f3f3f3;
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+  padding: 20px;
+  background-color: #f3f3f3;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(7, 60px);
+  gap: 5px;
+  margin: 20px 0;
+}
+.cell {
+  width: 60px;
+  height: 60px;
+  background-color: #ddd;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+.cell.player-one::after,
+.cell.player-two::after {
+  content: '';
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  position: absolute;
+  top: -100%;
+  animation: drop 0.5s ease-in-out forwards;
+}
+.cell.player-one::after {
+  background-color: red;
+}
+.cell.player-two::after {
+  background-color: yellow;
+}
+@keyframes drop {
+  to {
+      top: 0;
   }
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(7, 60px);
-    gap: 5px;
-    margin: 20px 0;
-  }
-  .cell {
-    width: 60px;
-    height: 60px;
-    background-color: #ddd;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .cell.player-one {
-    background-color: red;
-  }
-  .cell.player-two {
-    background-color: yellow;
-  }
-  .info {
-    margin-bottom: 20px;
-  }
-  button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  button:hover {
-    background-color: #0056b3;
-  }
+}
+.info {
+  margin-bottom: 20px;
+}
+button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+button:hover {
+  background-color: #0056b3;
+}
