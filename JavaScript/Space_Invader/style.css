@@ -32,11 +32,15 @@ body {
 }
 
 .shooter {
-    background-color: limegreen;
+    background-image: url('./shooter.png'); 
+    background-size: cover;
+    background-position: center;
 }
 
 .invader {
-    background-color: red;
+    background-image: url('./invader.png');
+    background-size: cover;
+    background-position: center;
 }
 
 .laser {
@@ -44,7 +48,9 @@ body {
 }
 
 .boom {
-    background-color: orange;
+    background-image: url('./explosionn.png');
+    background-size: cover;
+    background-position: center;
 }
 
 .score {
