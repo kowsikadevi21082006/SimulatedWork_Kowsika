@@ -40,32 +40,50 @@ function passTurn() {
     currentPlayer = currentPlayer === 'player-one' ? 'player-two' : 'player-one';
     currentPlayerText.textContent = `${currentPlayer === 'player-one' ? "Player One's" : "Player Two (AI)'s"} Turn`;
     resetTimer();
-    if (currentPlayer === 'player-two') {
+
+    if (currentPlayer === 'player-two' && gameActive) {
         setTimeout(aiMove, 1000);
     }
 }
 
 function aiMove() {
     if (!gameActive) return;
+
     const availableMoves = [...cells].filter(
         cell => !cell.classList.contains('player-one') && !cell.classList.contains('player-two')
     );
-    const randomCell = availableMoves[Math.floor(Math.random() * availableMoves.length)];
-    const columnIndex = parseInt(randomCell.getAttribute('data-index')) % cols;
 
-    for (let r = rows - 1; r >= 0; r--) {
-        const cellIndex = r * cols + columnIndex;
-        const cell = cells[cellIndex];
-        if (!cell.classList.contains('player-one') && !cell.classList.contains('player-two')) {
-            cell.classList.add(currentPlayer);
-            break;
+    let bestMove = null;
+
+    for (let cell of availableMoves) {
+        const index = parseInt(cell.getAttribute('data-index'));
+        const columnIndex = index % cols;
+
+        for (let r = rows - 1; r >= 0; r--) {
+            const cellIndex = r * cols + columnIndex;
+            if (
+                !cells[cellIndex].classList.contains('player-one') &&
+                !cells[cellIndex].classList.contains('player-two')
+            ) {
+                bestMove = cells[cellIndex];
+                break;
+            }
         }
+
+        if (bestMove) break;
     }
 
-    checkBoard();
-    currentPlayer = 'player-one';
-    currentPlayerText.textContent = "Player One's Turn";
-    resetTimer();
+    if (!bestMove) {
+        bestMove = availableMoves[Math.floor(Math.random() * availableMoves.length)];
+    }
+
+    if (bestMove) {
+        bestMove.classList.add(currentPlayer);
+        checkBoard();
+        currentPlayer = 'player-one';
+        currentPlayerText.textContent = "Player One's Turn";
+        resetTimer();
+    }
 }
 
 function checkBoard() {
@@ -152,27 +170,18 @@ cells.forEach(cell => cell.addEventListener('click', event => {
 
     const index = parseInt(event.target.getAttribute('data-index'));
     const columnIndex = index % cols;
-    let placed = false;
 
     for (let r = rows - 1; r >= 0; r--) {
         const cellIndex = r * cols + columnIndex;
         const cell = cells[cellIndex];
         if (!cell.classList.contains('player-one') && !cell.classList.contains('player-two')) {
             cell.classList.add(currentPlayer);
-            placed = true;
             break;
         }
     }
 
-    if (placed) {
-        checkBoard();
-        currentPlayer = 'player-two';
-        currentPlayerText.textContent = "Player Two (AI)'s Turn";
-        resetTimer();
-        if (gameActive) {
-            setTimeout(aiMove, 1000);
-        }
-    }
+    checkBoard();
+    passTurn();
 }));
 
 resetButton.addEventListener('click', resetGame);
